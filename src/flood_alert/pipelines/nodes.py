@@ -1,9 +1,12 @@
-from datetime import datetime
-
+import geopandas as gpd
 import pandas as pd
 
 
-def set_flood_threshold(data: pd.DataFrame, start_date: str, end_date: str, sigma: int = 1) -> pd.DataFrame:
+def set_flood_threshold(
+        data: pd.DataFrame,
+        start_date: str,
+        end_date: str,
+        sigma: int = 1) -> pd.DataFrame:
     """
     Set threshold for flood warning.
 
@@ -18,14 +21,34 @@ def set_flood_threshold(data: pd.DataFrame, start_date: str, end_date: str, sigm
     # filter to dates between start_date and end_date to set baseline
     filtered_data = data.sort_index().loc[:, data_range, :]
     # calculate mean and standard deviation of absolute water levels
-    data_stats = filtered_data.groupby('station_id')['absolute_water_level_meters'].agg(['mean', 'std'])
+    data_stats = filtered_data.groupby('station_id')[
+        'absolute_water_level_meters'
+    ].agg(['mean', 'std'])
     # add threshold
     data_stats['threshold'] = data_stats['mean'] + sigma * data_stats['std']
 
     return data_stats['threshold']
 
 
-def exceeds_flood_threshold(data: pd.DataFrame, threshold: pd.DataFrame) -> pd.DataFrame:
+def merge_station_data(
+        stations_meta_data: gpd.GeoDataFrame,
+        gauge_measurements: pd.DataFrame,
+        ) -> gpd.GeoDataFrame:
+    """_summary_
+
+    Args:
+        aoi (gpd.GeoDataFrame): _description_
+        flood_data (pd.Series): _description_
+
+    Returns:
+        gpd.GeoDataFrame: _description_
+    """
+
+    # merge station meta data and gauge measurements
+    return stations_meta_data.merge(gauge_measurements, how='left', on='station_id')
+
+
+def flood_at_station(data: gpd.GeoDataFrame, threshold: pd.DataFrame) -> pd.DataFrame:
     """_summary_
 
     Args:
@@ -35,11 +58,26 @@ def exceeds_flood_threshold(data: pd.DataFrame, threshold: pd.DataFrame) -> pd.D
     Returns:
         pd.DataFrame: _description_
     """
-    merged_data = pd.merge(data, threshold, how='left', left_index=True, right_index=True)
+    flood_at_station = pd.merge(data, threshold, how='left', on='station_id')
 
-    exceeds_threshold = merged_data.apply(lambda x: x.absolute_water_level_meters > x.threshold,
-                                          axis=1)
-    # set name of pd.Series
-    exceeds_threshold.name = 'exceeds_threshold'
+    flood_at_station['flood_alert'] = flood_at_station.apply(
+        lambda x: x.absolute_water_level_meters > x.threshold, axis=1)
 
-    return exceeds_threshold
+    return flood_at_station
+
+
+def flood_in_aoi(aoi: gpd.GeoDataFrame, flood_alert: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    """_summary_
+
+    Args:
+        aoi (gpd.GeoDataFrame): _description_
+        flood_alert (gpd.GeoDataFrame): _description_
+
+    Returns:
+        gpd.GeoDataFrame: _description_
+    """
+    # spatial join of aoi and flood alert data
+    flood_in_aoi = aoi.sjoin(flood_alert, how='left')
+
+    # return aoi where flood alert has been triggered
+    return flood_in_aoi.where(flood_in_aoi['flood_alert']).dropna()
