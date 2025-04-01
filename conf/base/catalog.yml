@@ -6,3 +6,10 @@
 gauge_measurements:
   type: flood_alert.datasets.GeoPackageDataSet
   filepath: data/01_raw/gauge_measurements.gpkg
+  index: [station_id, datetime] # use both station_id and datetime as index to the dataframe
+
+flood_threshold:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/flood_threshold.csv
+  save_args:
+    index: True
