@@ -6,7 +6,15 @@
 gauge_measurements:
   type: flood_alert.datasets.GeoPackageDataSet
   filepath: data/01_raw/gauge_measurements.gpkg
-  index: [station_id, datetime] # use both station_id and datetime as index to the dataframe
+  index: station_id # use station_id as index 
+
+stations_meta_data:
+  type: flood_alert.datasets.GeoPackageDataSet
+  filepath: data/01_raw/stations_exercise.gpkg
+
+aois:
+  type: flood_alert.datasets.GeoPackageDataSet
+  filepath: data/01_raw/exercise_aois.geojson
 
 flood_threshold:
   type: pandas.CSVDataset
@@ -15,3 +23,8 @@ flood_threshold:
     index_col: 0
   save_args:
     index: True
+
+flood_in_aoi:
+  type: flood_alert.datasets.GeoPackageDataSet
+  filepath: data/08_reporting/flood_in_aoi.geojson
+  driver: GeoJSON
