@@ -726,6 +726,49 @@ wheels = [
 ]
 
 [[package]]
+name = "flood-alert"
+source = { editable = "." }
+dependencies = [
+    { name = "geopandas" },
+    { name = "ipython", version = "8.18.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "ipython", version = "8.34.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "ipython", version = "9.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "jupyterlab" },
+    { name = "kedro" },
+    { name = "kedro-datasets", version = "4.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "kedro-datasets", version = "6.0.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "matplotlib", version = "3.9.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "matplotlib", version = "3.10.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "notebook" },
+    { name = "xarray", version = "2024.7.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "xarray", version = "2025.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+]
+
+[package.optional-dependencies]
+dev = [
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "pytest-mock" },
+    { name = "ruff" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "geopandas", specifier = ">=1.0.1" },
+    { name = "ipython", specifier = ">=8.10" },
+    { name = "jupyterlab", specifier = ">=3.0" },
+    { name = "kedro", specifier = "~=0.19.12" },
+    { name = "kedro-datasets", specifier = ">=4.1.0" },
+    { name = "matplotlib", specifier = ">=3.9.4" },
+    { name = "notebook" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = "~=7.2" },
+    { name = "pytest-cov", marker = "extra == 'dev'", specifier = "~=3.0" },
+    { name = "pytest-mock", marker = "extra == 'dev'", specifier = ">=1.7.1,<2.0" },
+    { name = "ruff", marker = "extra == 'dev'", specifier = "~=0.1.8" },
+    { name = "xarray", specifier = ">=2024.7.0" },
+]
+
+[[package]]
 name = "fonttools"
 version = "4.56.0"
 source = { registry = "https://pypi.org/simple" }
@@ -870,46 +913,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/b1/df/48c586a5fe32a0f01324ee087459e112ebb7224f646c0b5023f5e79e9956/httpx-0.28.1.tar.gz", hash = "sha256:75e98c5f16b0f35b567856f597f06ff2270a374470a5c2392242528e3e3e42fc", size = 141406 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/2a/39/e50c7c3a983047577ee07d2a9e53faf5a69493943ec3f6a384bdc792deb2/httpx-0.28.1-py3-none-any.whl", hash = "sha256:d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad", size = 73517 },
-]
-
-[[package]]
-name = "iceye-takehome"
-source = { editable = "." }
-dependencies = [
-    { name = "geopandas" },
-    { name = "ipython", version = "8.18.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "ipython", version = "8.34.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
-    { name = "ipython", version = "9.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "jupyterlab" },
-    { name = "kedro" },
-    { name = "matplotlib", version = "3.9.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "matplotlib", version = "3.10.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "notebook" },
-    { name = "xarray", version = "2024.7.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "xarray", version = "2025.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-]
-
-[package.optional-dependencies]
-dev = [
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "pytest-mock" },
-    { name = "ruff" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "geopandas", specifier = ">=1.0.1" },
-    { name = "ipython", specifier = ">=8.10" },
-    { name = "jupyterlab", specifier = ">=3.0" },
-    { name = "kedro", specifier = "~=0.19.12" },
-    { name = "matplotlib", specifier = ">=3.9.4" },
-    { name = "notebook" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = "~=7.2" },
-    { name = "pytest-cov", marker = "extra == 'dev'", specifier = "~=3.0" },
-    { name = "pytest-mock", marker = "extra == 'dev'", specifier = ">=1.7.1,<2.0" },
-    { name = "ruff", marker = "extra == 'dev'", specifier = "~=0.1.8" },
-    { name = "xarray", specifier = ">=2024.7.0" },
 ]
 
 [[package]]
@@ -1354,6 +1357,40 @@ wheels = [
 ]
 
 [[package]]
+name = "kedro-datasets"
+version = "4.1.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.10'",
+]
+dependencies = [
+    { name = "kedro", marker = "python_full_version < '3.10'" },
+    { name = "lazy-loader", marker = "python_full_version < '3.10'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/81/3c/e67bb977654e52a7795f5969d7d495e5ac0de9a5aed94bf0487c9bb12e1f/kedro_datasets-4.1.0.tar.gz", hash = "sha256:56e67fdc9cd7670a811407c471b0c7d98e81daaa66043ff052f0a0b0b6b2d4af", size = 99991 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/97/e9/7dc3ed5a4b45e829b46049126d0d9fc2e9c137874154623594df33b056ba/kedro_datasets-4.1.0-py3-none-any.whl", hash = "sha256:d3f0c71af072878729871160a17f6e1a23679f01848b17ac955891b2778bc9a2", size = 174150 },
+]
+
+[[package]]
+name = "kedro-datasets"
+version = "6.0.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.12'",
+    "python_full_version == '3.11.*'",
+    "python_full_version == '3.10.*'",
+]
+dependencies = [
+    { name = "kedro", marker = "python_full_version >= '3.10'" },
+    { name = "lazy-loader", marker = "python_full_version >= '3.10'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/23/00/9cd5ed25df12332dbe0cde093c41e2d66dad49e88b84d6115db43d986f23/kedro_datasets-6.0.0.tar.gz", hash = "sha256:6dc964d4b60bab89c9836044fe2a027676395acac610a1500a4727036c38a3c4", size = 119216 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/da/57/29be152276926f976c2041a9fa2712935ab10351d135f552e00b8508ce4b/kedro_datasets-6.0.0-py3-none-any.whl", hash = "sha256:64b538291217afcc16b9c24ca2937c132c486b7303a3d707e07ade9b51426914", size = 210825 },
+]
+
+[[package]]
 name = "kedro-telemetry"
 version = "0.6.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1560,6 +1597,18 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/5d/eb/78d50346c51db22c7203c1611f9b513075f35c4e0e4877c5dde378d66043/kiwisolver-1.4.8-pp310-pypy310_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:7cd2785b9391f2873ad46088ed7599a6a71e762e1ea33e87514b1a441ed1da1c", size = 81186 },
     { url = "https://files.pythonhosted.org/packages/43/f8/7259f18c77adca88d5f64f9a522792e178b2691f3748817a8750c2d216ef/kiwisolver-1.4.8-pp310-pypy310_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c07b29089b7ba090b6f1a669f1411f27221c3662b3a1b7010e67b59bb5a6f10b", size = 80279 },
     { url = "https://files.pythonhosted.org/packages/3a/1d/50ad811d1c5dae091e4cf046beba925bcae0a610e79ae4c538f996f63ed5/kiwisolver-1.4.8-pp310-pypy310_pp73-win_amd64.whl", hash = "sha256:65ea09a5a3faadd59c2ce96dc7bf0f364986a315949dc6374f04396b0d60e09b", size = 71762 },
+]
+
+[[package]]
+name = "lazy-loader"
+version = "0.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "packaging" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/6f/6b/c875b30a1ba490860c93da4cabf479e03f584eba06fe5963f6f6644653d8/lazy_loader-0.4.tar.gz", hash = "sha256:47c75182589b91a4e1a85a136c074285a5ad4d9f39c63e0d7fb76391c4574cd1", size = 15431 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/83/60/d497a310bde3f01cb805196ac61b7ad6dc5dcf8dce66634dc34364b20b4f/lazy_loader-0.4-py3-none-any.whl", hash = "sha256:342aa8e14d543a154047afb4ba8ef17f5563baad3fc610d7b15b213b0f119efc", size = 12097 },
 ]
 
 [[package]]

@@ -15,6 +15,7 @@ dependencies = [
  "xarray>=2024.7.0",
  "geopandas>=1.0.1",
  "matplotlib>=3.9.4",
+ "kedro-datasets>=4.1.0",
 ]
 
 [project.scripts]
@@ -56,3 +57,6 @@ attr = "flood_alert.__version__"
 [tool.setuptools.packages.find]
 where = [ "src",]
 namespaces = false
+
+[tool.kedro_telemetry]
+project_id = "4b786ef3eba14ebdbd3bdf5ba1a4bd5a"
