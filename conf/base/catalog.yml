@@ -11,5 +11,7 @@ gauge_measurements:
 flood_threshold:
   type: pandas.CSVDataset
   filepath: data/02_intermediate/flood_threshold.csv
+  load_args:
+    index_col: 0
   save_args:
     index: True
