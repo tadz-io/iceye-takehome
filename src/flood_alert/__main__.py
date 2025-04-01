@@ -1,5 +1,5 @@
 """iceye-takehome file for ensuring the package is executable
-as `iceye-takehome` and `python -m iceye_takehome`
+as `iceye-takehome` and `python -m flood_alert`
 """
 import sys
 from pathlib import Path

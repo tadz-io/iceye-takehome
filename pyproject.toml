@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 requires-python = ">=3.9"
-name = "iceye_takehome"
+name = "flood_alert"
 readme = "README.md"
 dynamic = [ "version",]
 dependencies = [
@@ -14,16 +14,17 @@ dependencies = [
  "kedro~=0.19.12",
  "xarray>=2024.7.0",
  "geopandas>=1.0.1",
+ "matplotlib>=3.9.4",
 ]
 
 [project.scripts]
-iceye-takehome = "iceye_takehome.__main__:main"
+iceye-takehome = "flood_alert.__main__:main"
 
 [project.optional-dependencies]
 dev = [ "pytest-cov~=3.0", "pytest-mock>=1.7.1, <2.0", "pytest~=7.2", "ruff~=0.1.8",]
 
 [tool.kedro]
-package_name = "iceye_takehome"
+package_name = "flood_alert"
 project_name = "iceye-takehome"
 kedro_init_version = "0.19.12"
 tools = "['Linting', 'Testing', 'Data Structure']"
@@ -39,7 +40,7 @@ ignore = [ "E501",]
 [project.entry-points."kedro.hooks"]
 
 [tool.pytest.ini_options]
-addopts = "--cov-report term-missing --cov src/iceye_takehome -ra"
+addopts = "--cov-report term-missing --cov src/flood_alert -ra"
 
 [tool.coverage.report]
 fail_under = 0
@@ -50,7 +51,7 @@ exclude_lines = [ "pragma: no cover", "raise NotImplementedError",]
 docstring-code-format = true
 
 [tool.setuptools.dynamic.version]
-attr = "iceye_takehome.__version__"
+attr = "flood_alert.__version__"
 
 [tool.setuptools.packages.find]
 where = [ "src",]
