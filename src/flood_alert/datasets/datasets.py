@@ -1,17 +1,20 @@
 import geopandas as gpd
-from kedro.io import AbstractDataSet
+import pandas as pd
+from kedro.io import AbstractDataset
 
 
-class GeoPackageDataSet(AbstractDataSet):
-    def __init__(self, filepath: str, layer: str = None):
+class GeoPackageDataSet(AbstractDataset):
+    def __init__(self, filepath: str):
         self.filepath = filepath
-        self.layer = layer
 
     def _load(self) -> gpd.GeoDataFrame:
-        return gpd.read_file(self.filepath, layer=self.layer)
+        gdf = gpd.read_file(self.filepath)
+        if 'datetime' in gdf.columns:
+            gdf['datetime'] = pd.to_datetime(gdf['datetime'])
+        return gdf
 
     def _save(self, data: gpd.GeoDataFrame) -> None:
-        data.to_file(self.filepath, layer=self.layer, driver="GPKG")
+        data.to_file(self.filepath, driver="GPKG")
 
     def _describe(self) -> dict:
-        return {"filepath": self.filepath, "layer": self.layer}
+        return {"filepath": self.filepath}
