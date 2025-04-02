@@ -24,6 +24,11 @@ flood_threshold:
   save_args:
     index: True
 
+flood_at_station:
+  type: flood_alert.datasets.GeoPackageDataSet
+  filepath: data/08_reporting/flood_at_station.geojson
+  driver: GeoJSON
+
 flood_in_aoi:
   type: flood_alert.datasets.GeoPackageDataSet
   filepath: data/08_reporting/flood_in_aoi.geojson
