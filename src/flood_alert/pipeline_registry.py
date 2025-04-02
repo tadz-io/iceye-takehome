@@ -14,6 +14,6 @@ def register_pipelines() -> dict[str, Pipeline]:
     """
     pipelines = {
         "evaluate_flood_alert": evaluate_flood_alert,
-        "__default__": set_flood_threshold,
+        "__default__": set_flood_threshold + evaluate_flood_alert,
     }
     return pipelines
