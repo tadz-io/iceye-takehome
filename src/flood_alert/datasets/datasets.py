@@ -6,6 +6,22 @@ from kedro.io import AbstractDataset
 
 
 class GeoPackageDataSet(AbstractDataset):
+    """
+    A Kedro dataset for reading and writing geospatial data using GeoPandas.
+
+    Args:
+        filepath (str): Path to the GeoPackage or GeoJSON file.
+        index (str, optional): Column to set as the index. Defaults to None.
+        driver (Literal['GPKG', 'GeoJSON']): Format for saving the data. Defaults to 'GPKG'.
+
+    Methods:
+        _load() -> gpd.GeoDataFrame:
+            Loads geospatial data, casts datetime columns, and sets the index if specified.
+        _save(data: gpd.GeoDataFrame) -> None:
+            Saves the GeoDataFrame to the specified file.
+        _describe() -> dict:
+            Returns a description of the dataset.
+    """
     def __init__(
             self,
             filepath: str,
