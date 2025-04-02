@@ -12,6 +12,9 @@ conf/**/*credentials*
 # ignore everything in the following folders
 data/**
 
+!flooded_stations.png
+!kedro-pipeline.png
+
 # except their sub-folders
 !data/**/
 
