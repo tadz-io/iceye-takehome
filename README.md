@@ -82,4 +82,8 @@ I have included a diagram of the current pipeline.
 
 The gauge measurements (i.e. `gauge_measurements` in the diagram) are currently read from the data file on disk using an implementation of a Kedro `AbstractDataset` (see `GeoPackageDataSet` under `/src/flood_alert/datasets/datasets.py`). The implementation can be changed to instead query an API for gauge data. However, the flow diagram would remain unchanged. 
 
+## GenAI utilization
+
+I mainly use LLMs (GPT-4o or Claude) as replacement for API documentation look ups and resolving errors. 
+
 [![Powered by Kedro](https://img.shields.io/badge/powered_by-kedro-ffc900?logo=kedro)](https://kedro.org)
