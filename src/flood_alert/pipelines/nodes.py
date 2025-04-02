@@ -8,14 +8,18 @@ def set_flood_threshold(
         end_date: str,
         sigma: int = 1) -> pd.DataFrame:
     """
-    Set threshold for flood warning.
+    Set threshold for flood warning. Flood threshold is determined by taking
+    the mean over all gauge measurements within [start_date, end_date] plus
+    sigma * standard deviation.
 
     Args:
-        data (pd.DataFrame): _description_
-        sigma (int): _description_
+        data (pd.DataFrame): Dataframe containing the gauge measurements under column
+            'absolute_water_level_meters' and station id's under column 'station_id'
+        sigma (int): The number of standard deviation above the mean water level that constitutes
+            a flood event
 
     Returns:
-        pd.DataFrame: _description_
+        pd.DataFrame: Dataframe containing the water level threshold for a flood event in meters
     """
     data_range = slice(pd.to_datetime(start_date), pd.to_datetime(end_date))
     # filter to dates between start_date and end_date to set baseline
@@ -34,32 +38,36 @@ def merge_station_data(
         stations_meta_data: gpd.GeoDataFrame,
         gauge_measurements: pd.DataFrame,
         ) -> gpd.GeoDataFrame:
-    """_summary_
+    """
+    Merge station meta data with gauge measurements
 
     Args:
-        aoi (gpd.GeoDataFrame): _description_
-        flood_data (pd.Series): _description_
+        stations_meta_data (gpd.GeoDataFrame): Meta data per station including geometries. Stations should have an
+            identifier under column 'station_id'
+        gauge_measurements (pd.DataFrame): Dataframe containing the gauge measurements per station
 
     Returns:
-        gpd.GeoDataFrame: _description_
+        gpd.GeoDataFrame: merged GeoDataFrame containing meta and gauge data per station
     """
 
     # merge station meta data and gauge measurements
     return stations_meta_data.merge(gauge_measurements, how='left', on='station_id')
 
 
-def flood_at_station(data: gpd.GeoDataFrame, threshold: pd.DataFrame) -> pd.DataFrame:
-    """_summary_
+def flood_at_station(data: gpd.GeoDataFrame, threshold: pd.DataFrame) -> gpd.GeoDataFrame:
+    """
+    Determines if a flood alert was triggered per station per timestamp
 
     Args:
-        data (pd.DataFrame): _description_
-        threshold (pd.DataFrame): _description_
+        data (pd.GeoDataFrame): Merged station meta data and gauge measurements including 
+            geolocation threshold (pd.DataFrame): Flood threshold per station as DataFrame
 
     Returns:
-        pd.DataFrame: _description_
+        gpd.GeoDataFrame: Dataframe with flood alert (`flood_alert`) as boolean per station,
+          per time stamp and geolocation
     """
     flood_at_station = pd.merge(data, threshold, how='left', on='station_id')
-
+    # check if gauge measurements exceeded flood threshold for every station at every timestamp
     flood_at_station['flood_alert'] = flood_at_station.apply(
         lambda x: x.absolute_water_level_meters > x.threshold, axis=1)
 
@@ -67,14 +75,16 @@ def flood_at_station(data: gpd.GeoDataFrame, threshold: pd.DataFrame) -> pd.Data
 
 
 def flood_in_aoi(aoi: gpd.GeoDataFrame, flood_alert: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
-    """_summary_
+    """
+    Determines if a flood alert was triggered in an AOI. Only returns AOI for which a flood
+        event happened.
 
     Args:
-        aoi (gpd.GeoDataFrame): _description_
-        flood_alert (gpd.GeoDataFrame): _description_
+        aoi (gpd.GeoDataFrame): GeoDataFrame containing the AOIs and geometries delineating the area
+        flood_alert (gpd.GeoDataFrame): Dataframe with flood alert per station per timestamp
 
     Returns:
-        gpd.GeoDataFrame: _description_
+        gpd.GeoDataFrame: GeoDataFrame of flooded AOIs
     """
     # spatial join of aoi and flood alert data
     flood_in_aoi = aoi.sjoin(flood_alert, how='left')
